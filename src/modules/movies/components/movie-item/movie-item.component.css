@@ -1,0 +1,24 @@
+mat-card {
+  width: 500px;
+  margin-bottom: 16px;
+}
+
+img {
+  width: 100%;
+}
+
+mat-card-header > .mat-card-header-text {
+  color: red;
+}
+
+.details > div {
+  padding: 16px 12px;
+}
+
+.mat-card-header .mat-card-title {
+  font-size: 24px;
+}
+
+.movie-year {
+  font-size: 14px;
+}
