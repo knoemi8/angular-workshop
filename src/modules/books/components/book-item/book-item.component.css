@@ -1,0 +1,46 @@
+mat-card {
+  width: 500px;
+  margin-bottom: 16px;
+}
+
+img {
+  width: 100%;
+}
+
+mat-card-header > .mat-card-header-text {
+  color: red;
+}
+
+.details > div {
+  padding: 16px 12px;
+}
+
+mat-card-actions {
+  padding-left: 16px;
+  padding-top: 16px;
+  border-top: 1px solid lightgray;
+}
+
+.mat-card-header .mat-card-title {
+  font-size: 24px;
+}
+
+textarea {
+  width: 80%;
+}
+
+.comment {
+  font-weight: bold;
+}
+
+.mat-card > .mat-card-actions:last-child {
+  margin-bottom: 0;
+}
+
+.form {
+  padding: 12px 0;
+}
+
+mat-form-field {
+  width: 80%;
+}

@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~normalize.css/normalize.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  margin: 0;
+  font-family: Roboto, sans-serif;
+  height: 100%;
+  display: flex;
+}
+
+.container {
+  display: flex;
+  margin: 10px;
+  flex-wrap: wrap;
+}
+
+.mat-card-header-text {
+  margin-left: 0;
+  border-bottom: 1px solid gray;
+}

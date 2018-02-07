@@ -1,0 +1,53 @@
+<div class="book-form" fxLayout="column">
+  <mat-card *ngIf="bookModel">
+    <form novalidate #bookForm="ngForm" (ngSubmit)="onSubmit()">
+      <mat-card-title>
+        Book Form
+      </mat-card-title>
+      <mat-card-content fxLayout="row">
+        <div fxFlex="70">
+          <mat-form-field>
+            <input matInput name="title" [(ngModel)]="bookModel.title" placeholder="Title" required #title="ngModel">
+            <mat-error *ngIf="title.invalid">Title required</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput name="author" [(ngModel)]="bookModel.author" placeholder="Author" required #author="ngModel">
+            <mat-error *ngIf="author.invalid">Author required</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <textarea [minDescriptionWords]="descriptionWordLength" matInput name="description" [(ngModel)]="bookModel.description" placeholder="Description (at least {{descriptionWordLength}} words)"
+              required #description="ngModel">
+            </textarea>
+            <mat-error *ngIf="description.errors?.required">Description required</mat-error>
+            <mat-error *ngIf="description.errors?.minDescriptionWords">Description needs at least {{descriptionWordLength}} words</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput name="poster" [(ngModel)]="bookModel.poster" placeholder="Poster">
+          </mat-form-field>
+        </div>
+        <div class="previewImage" fxFlex="30" style="text-align: center;">
+          <img [src]="bookModel?.poster" imageFallback="assets/noImage2.png">
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button type="submit" color="primary" [disabled]="bookForm.invalid">Save</button>
+        <button mat-raised-button [routerLink]="['../']">Cancel</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+  <br>
+  <br>
+  <mat-card>
+    <mat-card-title>
+      Google books metadata lookup
+    </mat-card-title>
+    <mat-card-content>
+      <form novalidate #searchForm="ngForm" (ngSubmit)="doSearch(searchForm);searchForm.reset();">
+        <mat-form-field>
+          <input matInput name="bookId" placeholder="Google Book Id" ngModel="kotPYEqx7kMC" required>
+        </mat-form-field>
+        <button mat-raised-button type="submit" color="primary" [disabled]="searchForm.invalid">Search</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
