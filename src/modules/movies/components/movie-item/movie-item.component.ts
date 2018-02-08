@@ -1,4 +1,5 @@
 import {Component, Input, OnChanges, Output, EventEmitter} from '@angular/core';
+import { Movie } from '../../models/movie.model';
 
 @Component({
   selector: 'movie-item',
@@ -6,18 +7,18 @@ import {Component, Input, OnChanges, Output, EventEmitter} from '@angular/core';
     <mat-card class="movie-item">
       <mat-card-header>
         <mat-card-title>
-          {{title}} <span class="movie-year">({{year}})</span>
+          {{movie.title}} <span class="movie-year">({{movie.year}})</span>
         </mat-card-title>
         <mat-card-subtitle>
-          {{genre}}
+          {{movie.genre}}
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content fxLayout="row" class="details">
         <div fxFlex="30">
-          <img src="{{poster}}" imageFallback="assets/noImage2.png">
+          <img src="{{movie.poster}}" imageFallback="assets/noImage2.png">
         </div>
         <div fxFlex="70">
-          {{plot}}
+          {{movie.plot}}
         </div>
       </mat-card-content>
       <div *ngIf="!commentSaved" class="form">
@@ -50,35 +51,26 @@ import {Component, Input, OnChanges, Output, EventEmitter} from '@angular/core';
         </button>
         <p class="comment">Rating:</p>
         <movie-rating [(rating)]="movieRating"></movie-rating>
-        <button mat-raised-button color="warn" (click)="handleDeleteMovie(id)">Delete</button>
+        <button mat-raised-button color="primary" [routerLink]="['./', movie.id]">Edit</button>
+        <button mat-raised-button color="warn" (click)="handleDeleteMovie(movie.id)">Delete</button>
     </mat-card>
   `,
   styleUrls: ['./movie-item.component.css'],
 })
 
 export class MovieItemComponent implements OnChanges {
-  @Input() id: number;
-  @Input() title: string;
-  @Input() year: number;
-  @Input() genre: string;
-  @Input() plot: string;
-  @Input() poster: string;
-  @Input() comment: string;
-
-  private movieComment;
-  private commentSaved;
+  @Input() movie: Movie;
 
   @Output() saveComment = new EventEmitter<{ movieId: number; comment: string }>();
   @Output() deleteMovie = new EventEmitter<number>();
 
-  ngOnChanges(changes) {
-    this.movieComment = changes.comment && changes.comment.currentValue;
-    this.commentSaved = this.movieComment && this.movieComment.length > 0;
-  }
+  private commentSaved = false;
+  private movieRating = 2;
+  private movieComment: string;
 
-  handleDeleteMovie(movieId) {
-    console.log(movieId);
-    this.deleteMovie.emit(movieId);
+  ngOnChanges(changes) {
+    this.movieComment = changes.movie && changes.movie.currentValue.comment;
+    this.commentSaved = this.movieComment && this.movieComment.length > 0;
   }
 
   toggleComment() {
@@ -86,28 +78,13 @@ export class MovieItemComponent implements OnChanges {
       this.commentSaved = false;
     } else {
       this.saveComment.emit({
-        movieId: this.id,
+        movieId: this.movie.id,
         comment: this.movieComment,
       });
-
-      this.commentSaved = true;
     }
   }
 
-   // saveEditComment (e, index) {
-   //   if(!this.movies[index].commentSaved) {
-   //     this.movies[index].commentSaved = true;
-   //   }
-   //   else {
-   //     this.movies[index].commentSaved = false;
-   //   }
-   // }
-
-   // countWords (str) {
-   //   if(str !== ''){
-   //     return str.trim().split(/\s+/).length;
-   //   }
-   //   else return 0;
-   // }
-
+  handleDeleteMovie(movieId) {
+    this.deleteMovie.emit(movieId);
+  }
 }

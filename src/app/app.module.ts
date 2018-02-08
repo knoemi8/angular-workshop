@@ -8,7 +8,6 @@ import { MaterialModule } from './material.module';
 import { AppComponent } from './containers/app/app.component';
 import { HomeModule } from '../modules/home/home.module';
 import { HomeComponent } from '../modules/home/containers';
-import { MoviesModule } from '../modules/movies/movies.module';
 
 export const ROUTES: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -16,6 +15,11 @@ export const ROUTES: Routes = [
   {
     path: 'books',
     loadChildren: '../modules/books/books.module#BooksModule',
+  },
+
+  {
+    path: 'movies',
+    loadChildren: '../modules/movies/movies.module#MoviesModule',
   },
 ];
 
@@ -26,7 +30,6 @@ export const ROUTES: Routes = [
     BrowserAnimationsModule,
     MaterialModule,
     HomeModule,
-    MoviesModule,
     RouterModule.forRoot(ROUTES),
   ],
   providers: [],

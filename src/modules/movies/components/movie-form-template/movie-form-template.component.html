@@ -1,0 +1,42 @@
+<div class="movie-form" fxLayout="column">
+  <mat-card *ngIf="movieModel">
+    <form novalidate #movieForm="ngForm" (ngSubmit)="onSubmit()">
+      <mat-card-title>
+        Movie Form
+      </mat-card-title>
+      <mat-card-content fxLayout="row">
+        <div fxFlex="70">
+          <mat-form-field>
+            <input matInput name="title" [(ngModel)]="movieModel.title" placeholder="Title" required #title="ngModel">
+            <mat-error *ngIf="title.invalid">Title required</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput name="year" [(ngModel)]="movieModel.year" placeholder="Author" required #year="ngModel">
+            <mat-error *ngIf="year.invalid">Year required</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput name="genre" [(ngModel)]="movieModel.genre" placeholder="Author" required #genre="ngModel">
+            <mat-error *ngIf="genre.invalid">Genre required</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput name="plot" [(ngModel)]="movieModel.plot" placeholder="Author" required #plot="ngModel">
+            <mat-error *ngIf="plot.invalid">Plot required</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <textarea matInput name="comment" [(ngModel)]="movieModel.plot" placeholder="Author" required #comment="ngModel"></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput name="poster" [(ngModel)]="movieModel.poster" placeholder="Poster">
+          </mat-form-field>
+        </div>
+        <div class="previewImage" fxFlex="30" style="text-align: center;">
+          <img [src]="movieModel?.poster" imageFallback="assets/noImage2.png">
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button type="submit" color="primary" [disabled]="movieForm.invalid">Save</button>
+        <button mat-raised-button [routerLink]="['../']">Cancel</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
