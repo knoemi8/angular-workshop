@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Store, select } from '@ngrx/store';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
@@ -10,6 +11,8 @@ import 'rxjs/add/operator/merge';
 
 import { BooksService } from './../../services/books.service';
 import { Book } from '../../models/book.model';
+import * as fromBooks from '../../reducers';
+import * as books from '../../actions/books.action';
 
 @Component({
   selector: 'books-component',
@@ -35,28 +38,33 @@ export class BooksComponent implements OnInit {
   books$: Observable<Book[]>;
   @ViewChild('searchField') searchField;
 
-  constructor(private booksService: BooksService) {}
+  constructor(private store: Store<any>, private booksService: BooksService) {
+    this.books$ = this.store.select(state => {
+      return state.booksFeatureState.books.books;
+    });
+  }
 
   loadBooks() {
     this.books$ = this.books$.merge(this.booksService.getBooks().first());
   }
 
   ngOnInit() {
-    const keypress$ = Observable.fromEvent(
-      this.searchField.nativeElement,
-      'input',
-    );
-    const filter$ = keypress$
-      .debounceTime(300)
-      .map((event: any) => event.target.value)
-      .mergeMap(searchTerm =>
-        this.booksService.searchBooks(searchTerm).takeUntil(keypress$),
-      );
+    this.store.dispatch(new books.Load());
+    // const keypress$ = Observable.fromEvent(
+    //   this.searchField.nativeElement,
+    //   'input',
+    // );
+    // const filter$ = keypress$
+    //   .debounceTime(300)
+    //   .map((event: any) => event.target.value)
+    //   .mergeMap(searchTerm =>
+    //     this.booksService.searchBooks(searchTerm).takeUntil(keypress$),
+    //   );
 
-    this.books$ = this.booksService
-      .getBooks()
-      .first()
-      .merge(filter$);
+    // this.books$ = this.booksService
+    //   .getBooks()
+    //   .first()
+    //   .merge(filter$);
   }
 
   handleCommentSave({ comment, bookId }) {

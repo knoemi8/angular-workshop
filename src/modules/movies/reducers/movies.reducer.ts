@@ -3,12 +3,9 @@ import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Movie } from '../models/movie.model';
 import { MoviesActions, MovieActionTypes } from '../actions/movies.action';
 
-
-
-export const adapter: EntityAdapter<Movie> = createEntityAdapter<Movie>({
-  selectId: (movie: Movie) => movie.id,
-  sortComparer: false,
-});
+export interface State {
+  movies: Movie[];
+}
 
 export function reducer(
   state = [],
@@ -17,7 +14,7 @@ export function reducer(
   switch (action.type) {
 
     case MovieActionTypes.LoadSuccess: {
-      return action.payload
+      return action.payload;
     }
 
     default: {
