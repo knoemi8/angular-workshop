@@ -40,7 +40,7 @@ export class BooksComponent implements OnInit {
 
   constructor(private store: Store<any>, private booksService: BooksService) {
     this.books$ = this.store.select(state => {
-      return state.booksFeatureState.books.books;
+      return state.app.bookReducer.books;
     });
   }
 

@@ -42,7 +42,8 @@ export class MoviesComponent {
   constructor(private store: Store<any>, private moviesService: MoviesService) {
 
     this.movies$ = this.store.select(state => {
-      return state.moviesFeatureState.movies;
+      //console.log(state.app.movieReducer);
+      return state.app.movieReducer.movies;
     });
   }
 

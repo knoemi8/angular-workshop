@@ -13,7 +13,7 @@ export class Load implements Action {
 export class LoadSuccess implements Action {
   readonly type = MovieActionTypes.LoadSuccess;
 
-  constructor(public payload: Movie[]) {}
+  constructor(public payload: any) {}
 }
 
 export type MoviesActions = Load | LoadSuccess;

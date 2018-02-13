@@ -44,8 +44,8 @@ export function reducer(
   }
 }
 
-export const getLoaded = (state: State) => state.loaded;
+// export const getLoaded = (state: State) => state.loaded;
 
-export const getLoading = (state: State) => state.loading;
+// export const getLoading = (state: State) => state.loading;
 
-export const getBooks = (state: State) => state.books;
+// export const getBooks = (state: State) => state.books;

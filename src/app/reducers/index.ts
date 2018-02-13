@@ -1,33 +1,34 @@
-import {
-  ActionReducerMap,
-  ActionReducer,
-  MetaReducer,
-} from '@ngrx/store';
-import { environment } from '../../environments/environment';
 
-import { storeFreeze } from 'ngrx-store-freeze';
 
 import * as fromMovies from '../../modules/movies/reducers/movies.reducer';
+import * as fromBooks from '../../modules/books/reducers/books.reducer';
+
+import { ActionReducerMap, combineReducers } from '@ngrx/store'
+
+
+import { InjectionToken } from '@angular/core';
 
 export interface State {
-  movies: fromMovies.State;
+    app: {
+        moviesState: fromMovies.State,
+        booksState: fromBooks.State,
+    }
 }
 
-export const reducers: ActionReducerMap<State> = {
-  movies: fromMovies.reducer
-};
+export const reducers = combineReducers({
+    movieReducer: fromMovies.reducer,
+    bookReducer: fromBooks.reducer,
+});
 
-export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
-  return function(state: State, action: any): State {
+export const reducerToken = new InjectionToken<ActionReducerMap<State>>('Reducers');
 
-    console.log('state', state);
-    console.log('action', action);
-
-    return reducer(state, action);
-  };
+export function getReducers() {
+    return {
+      app: reducers,
+    };
 }
 
-export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? [logger, storeFreeze]
-  : [];
+export const reducerProvider = [
+    { provide: reducerToken, useFactory: getReducers }
+];
 

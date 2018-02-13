@@ -40,7 +40,6 @@ export const ROUTES: Routes = [
     RouterModule.forChild(ROUTES),
     MaterialModule,
     FlexLayoutModule,
-    StoreModule.forFeature('booksFeatureState', reducers),
     EffectsModule.forFeature([BookEffects]),
   ],
   exports: [...fromContainers.containers],
